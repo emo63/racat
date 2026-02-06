@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Github, Linkedin, Twitter, Instagram, Code2, Folder, 
-  Mail, ChevronDown, MapPin, User, Heart, 
-  BookOpen, Briefcase, Plane, ArrowUp, Send, Quote,
-  GraduationCap, Terminal, CheckCircle2, Globe
+  Mail, MapPin, User, Briefcase, Plane, ArrowUp, Send, Quote,
+  GraduationCap, Terminal, CheckCircle2, Globe, Database
 } from 'lucide-react';
 import './App.css';
 
-// 1. Data Definitions
+// 1. إعداد البيانات الموحدة
+const socialLinks = [
+  { icon: <Linkedin size={24} />, url: "https://www.linkedin.com/in/ahmedmostafaalsabbahy/", label: "LinkedIn" },
+  { icon: <Github size={24} />, url: "https://github.com/alsabbahy", label: "Github" },
+  { icon: <Twitter size={24} />, url: "https://x.com/code__chronicle", label: "Twitter" },
+  { icon: <Instagram size={24} />, url: "https://www.instagram.com/sabbahy.codes/", label: "Instagram" },
+  { icon: <Database size={24} />, url: "https://stackoverflow.com/users/13487030/ahmed-alsabbahy", label: "StackOverflow" }
+];
+
 const testimonials = [
   { text: "Ahmed is a top-tier engineer. His ability to design secure and efficient backend solutions using FastAPI is truly impressive.", author: "Technical Lead" },
-  { text: "Add several of these, and keep them as fresh as possible, but be sure to focus on quality testimonials with strong highlights of your skills.", author: "Someone Else" },
-  { text: "Collaborating with Ahmed has been a great experience. He is technically sound and a great mentor to others.", author: "Project Manager" }
+  { text: "Collaborating with Ahmed has been a great experience. He is technically sound and a great mentor to others.", author: "Project Manager" },
+  { text: "Ahmed delivers high-quality code with great attention to detail and performance optimization.", author: "Senior Architect" }
 ];
 
 const projects = [
@@ -24,6 +31,7 @@ const projects = [
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // منطق التغيير التلقائي للـ Testimonials
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
@@ -57,20 +65,31 @@ function App() {
           <p className="intro-text">
             I'm an Egyptian <strong>Senior Software Engineer</strong> at <a href="https://lxt.ai" target="_blank" className="highlight">LXT</a>.
           </p>
+          
+          {/* الأيقونات في البنر مع التوسيط */}
           <div className="banner-socials">
-            <a href="#" className="banner-social-link"><Linkedin size={24} /></a>
-            <a href="#" className="banner-social-link"><Github size={24} /></a>
-            <a href="#" className="banner-social-link"><Code2 size={24} /></a>
-            <a href="#" className="banner-social-link"><Instagram size={24} /></a>
+            {socialLinks.map((social, index) => (
+              <a 
+                key={index} 
+                href={social.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="banner-social-link"
+                title={social.label}
+              >
+                {social.icon}
+              </a>
+            ))}
           </div>
+
           <div className="action-buttons">
-            <a href="/resume.pdf" target="_blank" className="btn-primary"><Folder size={18} /> Resume (PDF)</a>
+            <a href="/racat/resume.pdf" target="_blank" className="btn-primary"><Folder size={18} /> Resume (PDF)</a>
             <a href="#contact" className="btn-outline"><Mail size={18} /> Contact</a>
           </div>
         </motion.div>
       </section>
 
-      {/* 3. About Section (Gray) */}
+      {/* 3. About Section */}
       <section className="about-full-section" id="about">
         <div className="about-container">
           <h2>About me</h2>
@@ -84,11 +103,10 @@ function App() {
         </div>
       </section>
 
-      {/* 4. Professional Details (Education, Experience, Skills) - NEW */}
+      {/* 4. Professional Details */}
       <section className="pro-details-section" id="experience">
         <div className="section-container">
           <div className="pro-grid">
-            {/* Experience & Education */}
             <div className="pro-column">
               <h3 className="column-title"><Briefcase size={22} color="#64ffda" /> Experience</h3>
               <div className="timeline">
@@ -102,7 +120,6 @@ function App() {
                   <p className="company">Sword Egypt | 2020 - 2022</p>
                 </div>
               </div>
-
               <h3 className="column-title" style={{marginTop: '40px'}}><GraduationCap size={22} color="#64ffda" /> Education</h3>
               <div className="timeline">
                 <div className="timeline-item">
@@ -111,8 +128,6 @@ function App() {
                 </div>
               </div>
             </div>
-
-            {/* Skills */}
             <div className="pro-column">
               <h3 className="column-title"><Terminal size={22} color="#64ffda" /> Skills</h3>
               <div className="skills-grid">
@@ -127,7 +142,7 @@ function App() {
         </div>
       </section>
 
-      {/* 5. Projects Showcase */}
+      {/* 5. Projects Section */}
       <section className="projects-section" id="projects">
         <div className="section-container">
           <h2 className="section-title">Featured Projects</h2>
@@ -148,10 +163,10 @@ function App() {
         </div>
       </section>
 
-      {/* 6. Testimonials Section (Box) */}
+      {/* 6. Testimonials */}
       <section className="testimonials-section">
         <div className="testimonial-box">
-          <Quote size={35} className="quote-icon" />
+          <Quote size={35} className="quote-icon" style={{color: '#64ffda', marginBottom: '20px', display: 'block', margin: '0 auto'}} />
           <div className="testimonial-wrapper">
             <AnimatePresence mode='wait'>
               <motion.div key={activeIndex} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}>
@@ -183,7 +198,7 @@ function App() {
           <div className="contact-details-side">
             <div className="detail-item"><Mail color="#64ffda" /> <div><h4>Email</h4><p>ahmed@sabbahy.codes</p></div></div>
             <div className="detail-item"><MapPin color="#64ffda" /> <div><h4>Location</h4><p>6th of October City, Giza</p></div></div>
-            <div className="detail-item"><Github color="#64ffda" /> <div><h4>Github</h4><p>ahmedsabbahy</p></div></div>
+            <div className="detail-item"><Github color="#64ffda" /> <div><h4>Github</h4><p>alsabbahy</p></div></div>
           </div>
         </div>
       </section>
@@ -192,9 +207,11 @@ function App() {
       <footer className="footer-final">
         <button className="scroll-top-btn" onClick={scrollToTop}><ArrowUp size={24} /></button>
         <div className="footer-socials">
-          <a href="#" className="banner-social-link"><Linkedin size={20} /></a>
-          <a href="#" className="banner-social-link"><Github size={20} /></a>
-          <a href="#" className="banner-social-link"><Instagram size={20} /></a>
+          {socialLinks.map((social, index) => (
+            <a key={index} href={social.url} target="_blank" rel="noopener noreferrer" className="banner-social-link">
+              {React.cloneElement(social.icon, { size: 20 })}
+            </a>
+          ))}
         </div>
         <p style={{marginTop: '20px', color: '#8892b0', fontSize: '0.8rem'}}>Ahmed AlSabbahy &copy; 2026</p>
       </footer>
